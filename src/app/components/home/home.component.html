@@ -1,5 +1,11 @@
 <div class="container">
-    <button (click)="connectToStrava()" class="strava-btn">
-        Connect with<img src="assets/strava.svg" alt="Strava logo" class="logo" />
-    </button>
+    <div id="install-prompt" style="display:none;" class="install-div">
+        <p>Install Rutica to your home screen for a better experience!</p>
+        <button mat-button (click)="showInstallationInstructions()" class="strava-btn wider">Install</button>
+    </div>
+    <span *ngIf="isAppInstalled()">
+        <button (click)="connectToStrava()" class="strava-btn">
+            Connect with<img src="assets/strava.svg" alt="Strava logo" class="logo" />
+        </button>
+    </span>
 </div>
