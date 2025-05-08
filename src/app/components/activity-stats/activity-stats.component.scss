@@ -1,0 +1,39 @@
+.activity-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+    flex: 1;
+    color: var(--activity-color);
+  }
+  
+  h3 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .stats-row {
+    width: 100%;
+    display: flex;
+    flex-shrink: 0;
+    margin-top: 8px;
+    
+    .stat {
+      display: flex;
+      flex-direction: column;
+      max-width: 250px;
+      width: 100%;
+    
+      
+      .label {
+        font-size: 12px;
+        font-weight: 400;
+        margin-bottom: 2px;
+      }
+      
+      .value {
+        font-size: 15px;
+        font-weight: 600;
+      }
+    }
+  }

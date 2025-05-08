@@ -1,0 +1,193 @@
+<div class="sheet-header" #bottomSheet>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-column-icon lucide-chart-column"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+    Stats Settings
+  </div>
+
+  <div class="sheet-content">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Styling</mat-panel-title>
+      </mat-expansion-panel-header>
+        <div class="setting-group">
+            <label for="sameColor">Same color as map</label>
+            <div class="setting-control">
+              <mat-slide-toggle
+                id="sameColor"
+                [(ngModel)]="sameColor"
+                (change)="setColor($event)">
+              </mat-slide-toggle>
+            </div>
+          </div>
+        
+          <div class="setting-group" *ngIf="!sameColor">
+            <label for="statsColor">Stats Color</label>
+            <div class="setting-control">
+              <input
+                type="color"
+                id="statsColor"
+                [(ngModel)]="statsColor"
+                (input)="onColorChange($event)" />
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <label for="opacity">Opacity</label>
+            <div class="setting-control">
+                <mat-slider
+                max="1"
+                step="0.01"
+                discrete="true"
+                id="opacity">
+                    <input matSliderThumb [(ngModel)]="opacity" (change)="setOpacity($event)">
+                </mat-slider>
+            </div>
+          </div>
+      
+          <div class="setting-group">
+              <label for="alignImage">Align Stats</label>
+              <div class="setting-control alignment">
+                  <div (click)="horizontalAlign()" [class.selected]="horizontal">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-center-vertical-icon lucide-align-center-vertical"><path d="M12 2v20"/><path d="M8 10H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h4"/><path d="M16 10h4a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-4"/><path d="M8 20H7a2 2 0 0 1-2-2v-2c0-1.1.9-2 2-2h1"/><path d="M16 14h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1"/></svg>            
+                  </div>
+                  <div (click)="verticalAlign()" [class.selected]="vertical">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-center-horizontal-icon lucide-align-center-horizontal"><path d="M2 12h20"/><path d="M10 16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/><path d="M10 8V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4"/><path d="M20 16v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-1"/><path d="M14 8V7c0-1.1.9-2 2-2h2a2 2 0 0 1 2 2v1"/></svg>            
+                  </div>
+              </div>
+          </div>
+          </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Display</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="sheet-content">
+        <div class="setting-group">
+            <label for="activityTitle">Activity Title</label>
+            <div class="setting-control">
+              <mat-slide-toggle
+                id="activityTitle"
+                [(ngModel)]="activityTitle"
+                (change)="toggleActivityTitle($event)">
+              </mat-slide-toggle>
+            </div>
+        </div>
+
+        <div class="sheet-content">
+            <div class="setting-group">
+                <label for="distance">Distance</label>
+                <div class="setting-control">
+                  <mat-slide-toggle
+                    id="distance"
+                    [(ngModel)]="distance"
+                    (change)="toggleDistance($event)">
+                  </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+
+        <div class="sheet-content">
+            <div class="setting-group">
+                <label for="pace">Pace</label>
+                <div class="setting-control">
+                  <mat-slide-toggle
+                    id="pace"
+                    [(ngModel)]="pace"
+                    (change)="togglePace($event)">
+                  </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+
+        <div class="sheet-content">
+            <div class="setting-group">
+                <label for="time">Time</label>
+                <div class="setting-control">
+                  <mat-slide-toggle
+                    id="time"
+                    [(ngModel)]="time"
+                    (change)="toggleTime($event)">
+                  </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+
+        <div class="sheet-content">
+            <div class="setting-group">
+                <label for="elevationGain">Elevation Gain</label>
+                <div class="setting-control">
+                  <mat-slide-toggle
+                    id="elevationGain"
+                    [(ngModel)]="elevationGain"
+                    (change)="toggleElevationGain($event)">
+                  </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+
+        <div class="sheet-content">
+            <div class="setting-group">
+                <label for="calories">Calories</label>
+                <div class="setting-control">
+                  <mat-slide-toggle
+                    id="calories"
+                    [(ngModel)]="calories"
+                    (change)="toggleCalories($event)">
+                  </mat-slide-toggle>
+                </div>
+            </div>
+        </div> 
+      
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel style="margin-bottom: 20px;">
+        <mat-expansion-panel-header>
+          <mat-panel-title> Layout</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="sheet-content">
+          <div class="setting-group">
+            <label for="columns">Number of Columns</label>
+            <div class="setting-control alignment">
+              <div (click)="setLayout(1)" [class.selected]="columns === 1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rectangle-vertical-icon lucide-rectangle-vertical"><rect width="12" height="20" x="6" y="2" rx="2"/></svg>            
+              </div>
+              <div (click)="setLayout(2)" [class.selected]="columns === 2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-columns2-icon lucide-columns-2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 3v18"/></svg>            
+              </div>
+              <div (click)="setLayout(3)" [class.selected]="columns === 3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-columns3-icon lucide-columns-3"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>
+              </div>
+              <div (click)="setLayout(4)" [class.selected]="columns === 4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-columns4-icon lucide-columns-4"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7.5 3v18"/><path d="M12 3v18"/><path d="M16.5 3v18"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sheet-content" *ngIf="activityTitle">
+          <div class="setting-group">
+              <label for="calories">Center title text</label>
+              <div class="setting-control">
+                <mat-slide-toggle
+                  id="centerTitle"
+                  [(ngModel)]="centerTitle"
+                  (change)="toggleCenterTitle($event)">
+                </mat-slide-toggle>
+              </div>
+          </div>
+      </div> 
+      <div class="sheet-content">
+        <div class="setting-group">
+            <label for="calories">Center stats text</label>
+            <div class="setting-control">
+              <mat-slide-toggle
+                id="centerStats"
+                [(ngModel)]="centerStats"
+                (change)="toggleCenterStats($event)">
+              </mat-slide-toggle>
+            </div>
+        </div>
+    </div> 
+      </mat-expansion-panel>
+  </mat-accordion>
+</div>

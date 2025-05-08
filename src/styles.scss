@@ -1,1 +1,180 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use 'app_theme-colors.scss' as custom;
+
+
+:root {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
+  input[type="range"]{
+    pointer-events:none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    pointer-events:all;
+  }
+  input[type="range"]::-moz-range-thumb {
+    pointer-events:all;
+  }
+  input[type="range"]::-ms-thumb {
+    pointer-events:all;
+  }
+
+  @include mat.expansion-overrides((
+    container-background-color: transparent,
+    container-text-color: rgb(202, 202, 202),
+    
+  ));
+  .mat-expansion-panel-header {
+    padding: unset;
+    padding-right: 6px;
+    background: none !important;
+    height: 48px !important;
+    .mat-expansion-indicator {
+      svg {
+        fill: rgb(202, 202, 202),;
+      }
+    }
+  }
+  .mat-expansion-panel-spacing {
+    margin: 0;
+  }
+
+  .mat-expansion-panel-header:hover {
+    background: none !important;
+  }
+
+  .mat-expansion-panel-header-title {
+    color: rgb(202, 202, 202);
+    font-size: 15px;
+  }
+  .mat-expansion-panel {
+    box-shadow: none !important;
+  }
+  .mat-expansion-panel-body {
+    padding: 0 16px 16px;
+    .sheet-content {
+      padding: 0;
+    }
+  }
+  mat-slider {
+    width: 200px;
+  }
+}
+
+* {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    touch-action:pan-y;
+    background-color: #141616;
+    color-scheme: light dark;
+    @include mat.theme((
+      color: custom.$primary-palette,
+    ));
+  }
+
+  .loading-wrapper {
+    width: 100%;
+    height: 100vh;
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .runner-gif {
+    width: 100px;
+    height: auto;
+  }
+  .mat-bottom-sheet-container {
+    padding: 0 !important;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05); 
+    background: #2a2c2c !important;
+    max-height: 50vh !important;
+    .sheet-header {
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      font-size: 17px;
+      color: #fc4c02;
+      position: sticky;
+      top: -1px;
+      margin: 0;
+      z-index: 10;
+      font-weight: bold;
+      background-color: #2a2c2c;
+      border-bottom: 1px solid #ffffff0d;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .sheet-content {
+      padding: 0rem 1rem 2rem;
+      display: flex;
+      flex-direction: column;
+      .setting-group {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 14px;
+        padding: 10px 0;
+        height: 50px;
+        border-bottom: 1px solid rgba(202, 202, 202, 0.085);
+      
+        label {
+          font-weight: 500;
+          font-size: 15px;
+          color: rgb(202, 202, 202);
+        }
+
+        .mdc-label {
+          display: none;
+        }
+
+        .alignment {
+          svg {
+            stroke: rgb(202, 202, 202);
+          }
+        }
+  
+        .setting-control {
+          display: flex;
+          align-items: center;
+          margin-left: 10px;
+  
+          input[type='color'] {
+            width: 52px;
+            height: 32px;
+            padding: 0;
+            background: none;
+            cursor: pointer;
+            border-radius: 8px;
+        
+            &::-webkit-color-swatch-wrapper {
+              padding: 0;
+            }
+          }
+        
+          .mat-slide-toggle {
+            margin: 0;
+            padding: 0;
+          } 
+        } 
+      }
+    }
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

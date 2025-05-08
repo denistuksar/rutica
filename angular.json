@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "statsnap": {
+    "rutica": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/statsnap",
+            "outputPath": "dist/rutica",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -26,12 +26,14 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -50,7 +52,14 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "serviceWorker": "ngsw-config.json",
+              "optimization": true,
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "statsJson": false
             },
             "development": {
               "optimization": false,
@@ -64,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "statsnap:build:production"
+              "buildTarget": "rutica:build:production"
             },
             "development": {
-              "buildTarget": "statsnap:build:development"
+              "buildTarget": "rutica:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -91,6 +100,8 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
+              "src/app_theme-colors.scss",
               "src/styles.scss"
             ],
             "scripts": []

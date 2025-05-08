@@ -1,0 +1,36 @@
+.export-sheet {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    background: none !important;
+  }
+  
+  .export-button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    text-align: center;
+    gap: 20px;
+    background-color: #fc4c02;
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  
+    .icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .secondary {
+    background-color: rgb(90, 90, 90);
+  }

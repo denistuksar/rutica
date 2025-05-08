@@ -1,0 +1,16 @@
+<div *ngIf="loading" class="loading-wrapper">
+  <img src="assets/loading.gif" alt="Loading..." class="runner-gif">
+</div>
+
+<header class="header-bar" *ngIf="!loading && activities.length > 0">
+  <span>Select an activity</span>
+</header>
+
+<div class="content">
+  <div class="activity-list" *ngIf="!loading && activities.length > 0">
+    <div class="activity-card" *ngFor="let activity of activities" (click)="goToUpload(activity.id)">
+    <app-map [activity]="activity" [color]="'#fc4c02'"></app-map>
+    <app-activity-stats [activity]="activity"></app-activity-stats>
+    </div>
+  </div>
+</div>
