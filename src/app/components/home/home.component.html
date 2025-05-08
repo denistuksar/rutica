@@ -1,5 +1,5 @@
 <div class="container">
-    <div id="install-prompt" style="display:none;" class="install-div">
+    <div id="install-prompt" style="display:none;" class="install-div" *ngIf="!isAppInstalled()">
         <p>Install Rutica to your home screen for a better experience!</p>
         <button mat-button (click)="showInstallationInstructions()" class="strava-btn wider">Install</button>
     </div>
