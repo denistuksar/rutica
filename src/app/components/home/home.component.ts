@@ -10,15 +10,15 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  
-    constructor(
-      private stravaService: StravaService,
-      private route: ActivatedRoute,
-      private router: Router
-    ) {}
 
-  connectToStrava () {
-    const clientId = environment.strava.clientId
+  constructor(
+    private stravaService: StravaService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
+
+  connectToStrava() {
+    const clientId = environment.stravaClientId
     const redirectUri = encodeURIComponent(window.location.origin)
     const scope = 'activity:read_all'
 
@@ -27,25 +27,25 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
-  // If already authenticated, go to activity list
-  if (this.stravaService.isAuthenticated()) {
-    this.router.navigate(['/activity-list'])
-    return
-  }
-
-  // Otherwise, check for auth code from Strava redirect
-  this.route.queryParams.subscribe(params => {
-    const code = params['code']
-    if (code) {
-      this.stravaService.exchangeToken(code).subscribe({
-        next: () => {
-          this.router.navigate(['/activity-list'])
-        },
-        error: (error) => {
-          console.error('Error exchanging token:', error)
-        }
-      })
+    // If already authenticated, go to activity list
+    if (this.stravaService.isAuthenticated()) {
+      this.router.navigate(['/activity-list'])
+      return
     }
-  })
+
+    // Otherwise, check for auth code from Strava redirect
+    this.route.queryParams.subscribe(params => {
+      const code = params['code']
+      if (code) {
+        this.stravaService.exchangeToken(code).subscribe({
+          next: () => {
+            this.router.navigate(['/activity-list'])
+          },
+          error: (error) => {
+            console.error('Error exchanging token:', error)
+          }
+        })
+      }
+    })
   }
 }

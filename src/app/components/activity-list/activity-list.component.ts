@@ -24,7 +24,7 @@ export class ActivityListComponent implements OnInit {
   constructor(
     private stravaService: StravaService,
     private router: Router
-    ) {}
+  ) { }
 
   ngOnInit() {
     this.checkAuthorization()
@@ -41,15 +41,17 @@ export class ActivityListComponent implements OnInit {
     }
   }
 
-  fetchActivities () {
-    this.updateThemeColor('#1d1f1f') 
+  fetchActivities() {
+    this.updateThemeColor('#1d1f1f')
     this.loading = true
     this.stravaService.getActivities().subscribe({
       next: data => {
-        const runs = data.filter(activity => activity.sport_type === 'Run').slice(0, 10)
-        this.activities = runs
-        console.log(this.activities)
+        const validTypes = ['Run', 'Ride', 'Mountain Bike', 'Hike', 'Walk', 'Roller Ski', 'Nordic Ski']
         this.loading = false
+        const filtered = data.filter(activity =>
+          validTypes.includes(activity.type) && activity.map && activity.map.summary_polyline
+        )
+        this.activities = filtered
       },
       error: err => {
         console.error(err)
