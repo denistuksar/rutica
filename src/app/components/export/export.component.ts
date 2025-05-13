@@ -11,72 +11,104 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule,
     FormsModule
-  ],  templateUrl: './export.component.html',
+  ], templateUrl: './export.component.html',
   styleUrl: './export.component.scss'
 })
 export class ExportComponent {
 
-constructor(
-  private sharedSettings: SharedSettingsService,
-  private bottomSheetRef: MatBottomSheetRef<ExportComponent>,
-  private router: Router
-) {}
+  constructor(
+    private sharedSettings: SharedSettingsService,
+    private bottomSheetRef: MatBottomSheetRef<ExportComponent>,
+    private router: Router
+  ) { }
 
-exportImage(withTransparentBackground = false) {
-  this.bottomSheetRef.dismiss()
-  this.sharedSettings.setLoading(true)
-  const captureArea = document.querySelector('.editor-canvas') as HTMLElement
-  const frameWrapper = captureArea.querySelector('.frame-wrapper') as HTMLElement
-  const imageElement = captureArea.querySelector('img') as HTMLImageElement
+  exportImage(withTransparentBackground = false) {
+    this.bottomSheetRef.dismiss();
 
-  const originalBackgroundColor = frameWrapper?.style.backgroundColor
-  const originalBackgroundImage = frameWrapper?.style.backgroundImage
-  const originalImageSrc = imageElement?.src
+    const captureArea = document.querySelector('.editor-canvas') as HTMLElement;
+    const imageElement = captureArea.querySelector('img') as HTMLImageElement;
+    const frameWrapper = captureArea.querySelector('.frame-wrapper') as HTMLElement;
 
-  // Temporarily remove background and image source if exporting with transparent background
-  if (withTransparentBackground && frameWrapper && imageElement) {
-    frameWrapper.style.backgroundColor = 'transparent'  // Remove background color
-    frameWrapper.style.backgroundImage = 'none'  // Remove background image (if any)
-    imageElement.src = ''  // Temporarily remove image src
+    if (withTransparentBackground) {
+      frameWrapper.style.backgroundColor = 'transparent'
+      frameWrapper.style.backgroundImage = 'none'
+      imageElement.style.display = 'none'
+    }
+
+    // 1. Load the original image at full quality
+    const originalImage = new Image();
+    originalImage.crossOrigin = 'anonymous';
+    originalImage.src = imageElement.src;
+
+    originalImage.onload = () => {
+      this.sharedSettings.setLoading(true);
+      // 2. Hide image visually but keep its space for overlays
+      const originalFilter = imageElement.style.filter;
+      imageElement.style.filter = 'opacity(0%)';
+
+      html2canvas(captureArea, {
+        backgroundColor: null,
+        useCORS: true,
+        allowTaint: true,
+        scale: 5
+      }).then(overlayCanvas => {
+        // 3. Restore image
+        imageElement.style.filter = originalFilter;
+
+        // 4. Create final canvas at full image resolution
+        const finalCanvas = document.createElement('canvas');
+        const newSize = this.fitTo9by16(originalImage.naturalWidth, originalImage.naturalHeight)
+
+        finalCanvas.width = newSize.width
+        finalCanvas.height = newSize.height;
+        const ctx = finalCanvas.getContext('2d')!;
+
+        // 5. Draw the original image
+        if (!withTransparentBackground) {
+          ctx.drawImage(originalImage, 0, 0)
+        }
+
+        // 6. Draw the overlays, scaling up to match the original image size
+        ctx.drawImage(
+          overlayCanvas,
+          0, 0, overlayCanvas.width, overlayCanvas.height,
+          0, 0, finalCanvas.width, finalCanvas.height
+        );
+
+        // 7. Export
+        finalCanvas.toBlob(blob => {
+          if (!blob) return;
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'exported-photo.png';
+          link.click();
+          URL.revokeObjectURL(url);
+        }, 'image/png');
+
+        setTimeout(() => {
+          this.sharedSettings.setLoading(false);
+        }, 1000);
+      });
+    };
   }
 
-  const scale = window.devicePixelRatio || 2
+  fitTo9by16 (width: number, height: number) {
+    const targetRatio = 9 / 16
+    const currentRatio = width / height
 
-  html2canvas(captureArea, {
-    useCORS: true,
-    allowTaint: true,
-    backgroundColor: withTransparentBackground ? null : '#ffffff',
-    scale: scale,
-    width: captureArea.offsetWidth,
-    height: captureArea.offsetHeight
-  }).then(originalCanvas => {
-
-    if (frameWrapper) {
-      frameWrapper.style.backgroundColor = originalBackgroundColor || ''
-      frameWrapper.style.backgroundImage = originalBackgroundImage || ''
+    if (currentRatio > targetRatio) {
+      return {
+        width: height * targetRatio,
+        height
+      }
+    } else {
+      return {
+        width,
+        height: width / targetRatio
+      }
     }
-    if (imageElement) {
-      imageElement.src = originalImageSrc || ''
-    }
-
-    const canvas = document.createElement('canvas')
-    canvas.width = originalCanvas.width
-    canvas.height = originalCanvas.height - 1
-
-    const ctx = canvas.getContext('2d')
-    ctx?.drawImage(originalCanvas, 0, 0)
-
-    const imageDataUrl = canvas.toDataURL('image/png')
-
-    const link = document.createElement('a')
-    link.href = imageDataUrl
-    link.download = withTransparentBackground ? 'exported-transparent.png' : 'exported-photo.png'
-    link.click()
-    setTimeout(() => {
-      this.sharedSettings.setLoading(false)
-    }, 1000);
-  })
-}
+  }
 
   returnToActivities() {
     this.sharedSettings.resetAll()

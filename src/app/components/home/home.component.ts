@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   isAppInstalled(): boolean {
-    return window.matchMedia('(display-mode: standalone)').matches;
+    return window.matchMedia('(display-mode: standalone)').matches || !environment.production;
   }
 
   private setupPwaInstallPrompt() {

@@ -1,162 +1,166 @@
-body, html {
+body,
+html {
   overflow: hidden;
 }
-.photo-editor {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background: #1d1f1f;
 
-    .image {
+.photo-editor {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #1d1f1f;
+
+  .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding-bottom: 70px;
+    touch-action: none;
+  }
+
+  .background-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .draggable {
+    position: absolute;
+    touch-action: none;
+    color: white;
+    font-weight: bold;
+    user-select: none;
+  }
+
+  .map-element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .stats-element {
+    display: flex;
+    height: auto;
+    font-size: 16px;
+    white-space: nowrap;
+  }
+
+  .toolbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 95px;
+    background: #2a2c2c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 45px;
+    z-index: 1000;
+
+    button {
+      background: none;
+      border: none;
+      color: rgb(202, 202, 202);
+      font-size: 24px;
       display: flex;
-      justify-content: center;
       align-items: center;
-      height: 100%;
-      padding-bottom: 70px;
-      touch-action: none;
-    }
-  
-    .background-photo {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-  
-    .draggable {
-      position: absolute;
-      touch-action: none;
-      padding: 8px;
-      color: white;
-      font-weight: bold;
-      user-select: none;
-    }
-  
-    .map-element {
-      width: 150px;
-      height: 150px;
-      display: flex;
       justify-content: center;
-      align-items: center;
-    }
-  
-    .stats-element {
-      display: flex;
-      height: auto;
-      font-size: 16px;
-      white-space: nowrap;
-    }
-  
-    .toolbar {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      height: 95px;
-      background: #2a2c2c;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 45px;
-      z-index: 1000;
-  
-      button {
-        background: none;
-        border: none;
-        color: rgb(202, 202, 202);
-        font-size: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 10px;
-        cursor: pointer;
-        svg {
-            height: 25px;
-            width: auto;
-        }
+      margin-bottom: 10px;
+      cursor: pointer;
+
+      svg {
+        height: 25px;
+        width: auto;
       }
     }
-    .frame-wrapper {
-      width: 100%;
-      aspect-ratio: 9 / 16;
-      overflow: hidden;
-      position: relative;
-      touch-action: none;
-      background: var(--frame-wrapper-background, transparent);
-    }
-    
-    .draggable-photo {
-      position: absolute;
-      max-width: none;
-      max-height: none;
-      height: 100%;
-      user-select: none;
-      cursor: grab;
-      touch-action: none;
-      transform-origin: center;
-    }
-
-    .instagram-ui-warning {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      pointer-events: none; // make sure it doesn't block interactions
-      background-color: rgba(255, 0, 0, 0.2); // red with some transparency
-      z-index: 10;
-    }
-    
-    .top-warning {
-      top: 0;
-      height: 70px; // adjust based on typical IG UI height
-    }
-    
-    .bottom-warning {
-      bottom: 0;
-      height: 60px; // adjust as needed
-    }
   }
 
-  .color-drawer {
+  .frame-wrapper {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    position: relative;
+    touch-action: none;
+    background: var(--frame-wrapper-background, transparent);
+  }
+
+  .draggable-photo {
     position: absolute;
-    top: 60px; // adjust based on toolbar
-    right: 20px;
-    background: white;
-    border: 1px solid #ccc;
-    padding: 12px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    z-index: 1000;
-  
-    label {
-      display: block;
-      margin-bottom: 4px;
-      font-weight: bold;
-    }
-  
-    input[type='color'] {
-      width: 100%;
-      height: 32px;
-      border: none;
-      cursor: pointer;
-    }
+    max-width: none;
+    max-height: none;
+    height: 100%;
+    user-select: none;
+    cursor: grab;
+    touch-action: none;
+    transform-origin: center;
   }
 
-  .grid-overlay {
+  .instagram-ui-warning {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-  
-    .grid-line {
-      position: absolute;
-      background-color: rgba(255, 255, 255, 0.3);
-    }
-  
-    .horizontal {
-      height: 1px;
-      width: 100%;
-    }
-  
-    .vertical {
-      width: 1px;
-      height: 100%;
-    }
+    left: 0;
+    width: 100%;
+    pointer-events: none; // make sure it doesn't block interactions
+    background-color: rgba(255, 0, 0, 0.2); // red with some transparency
+    z-index: 10;
   }
+
+  .top-warning {
+    top: 0;
+    height: 70px; // adjust based on typical IG UI height
+  }
+
+  .bottom-warning {
+    bottom: 0;
+    height: 60px; // adjust as needed
+  }
+}
+
+.color-drawer {
+  position: absolute;
+  top: 60px; // adjust based on toolbar
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+
+  label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+  }
+
+  input[type='color'] {
+    width: 100%;
+    height: 32px;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+
+  .grid-line {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .horizontal {
+    height: 1px;
+    width: 100%;
+  }
+
+  .vertical {
+    width: 1px;
+    height: 100%;
+  }
+}
