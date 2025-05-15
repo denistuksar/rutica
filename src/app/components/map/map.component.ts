@@ -17,39 +17,39 @@ export class MapComponent {
   @Input() color: string = "#fff"
   strokeWidth = '0.5'
 
-  constructor(private settings: SharedSettingsService) {}
+  constructor(private settings: SharedSettingsService) { }
 
   getPoints(encoded: string): string {
     const coords = polyline.decode(encoded)
-  
+
     const lats = coords.map(([lat]) => lat)
     const lngs = coords.map(([, lng]) => lng)
-  
+
     const minLat = Math.min(...lats)
     const maxLat = Math.max(...lats)
     const minLng = Math.min(...lngs)
     const maxLng = Math.max(...lngs)
-  
+
     const padding = 5
     const svgWidth = 50
     const svgHeight = 50
-  
+
     const mapWidth = svgWidth - 2 * padding
     const mapHeight = svgHeight - 2 * padding
-  
+
     const midLat = (minLat + maxLat) / 2
     const latToKm = 111 // rough constant
     const lngToKm = 111 * Math.cos(midLat * Math.PI / 180)
-  
+
     const widthInKm = (maxLng - minLng) * lngToKm
     const heightInKm = (maxLat - minLat) * latToKm
     const dataAspect = widthInKm / heightInKm
     const svgAspect = mapWidth / mapHeight
-  
+
     let scale = 1
     let offsetX = padding
     let offsetY = padding
-  
+
     if (dataAspect > svgAspect) {
       // Fit by width
       scale = mapWidth / widthInKm
@@ -61,7 +61,7 @@ export class MapComponent {
       const drawingWidth = widthInKm * scale
       offsetX += (mapWidth - drawingWidth) / 2
     }
-  
+
     return coords
       .map(([lat, lng]) => {
         const x = offsetX + (lng - minLng) * lngToKm * scale

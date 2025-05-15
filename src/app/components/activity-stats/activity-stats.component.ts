@@ -1,4 +1,4 @@
-import { Component, effect, Input, OnInit } from '@angular/core';
+import { Component, effect, Input } from '@angular/core';
 import { ActivityModel } from '../../models/activity.model';
 import { CommonModule } from '@angular/common';
 import { PaceFormatPipe } from '../../pipes/pace-format.pipe';
@@ -22,18 +22,27 @@ export class ActivityStatsComponent {
   pace: boolean = true
   time: boolean = true
   elevationGain: boolean = false
+  avgHeartRate: boolean = false
   calories: boolean = false
   activityTitle: boolean = true
+  description: boolean = false
   columns: number = 3
+  columnGap: number = 10
+  rowGap: number = 10
   centerTitleText: boolean = false
   centerStatsText: boolean = false
+  fontFamily: string = 'Roboto'
 
   constructor(
     private settings: SharedSettingsService
-  ) {}
+  ) { }
 
   private distanceEffect = effect(() => {
     this.distance = this.settings.distance()
+  })
+
+  private fontFamilyEffect = effect(() => {
+    this.fontFamily = this.settings.fontFamily()
   })
 
   private paceEffect = effect(() => {
@@ -48,6 +57,10 @@ export class ActivityStatsComponent {
     this.elevationGain = this.settings.elevationGain()
   })
 
+  private avgHeartRateEffect = effect(() => {
+    this.avgHeartRate = this.settings.avgHeartRate()
+  })
+
   private caloriesEffect = effect(() => {
     this.calories = this.settings.calories()
   })
@@ -56,9 +69,20 @@ export class ActivityStatsComponent {
     this.activityTitle = this.settings.activityTitle()
   })
 
+  private descriptionEffect = effect(() => {
+    this.description = this.settings.description()
+  })
 
   private columnsEffect = effect(() => {
     this.columns = this.settings.columns()
+  })
+
+  private columnGapEffect = effect(() => {
+    this.columnGap = this.settings.columnGap()
+  })
+
+  private rwoGapEffect = effect(() => {
+    this.rowGap = this.settings.rowGap()
   })
 
   private centerTitleTextEffect = effect(() => {

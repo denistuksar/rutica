@@ -5,6 +5,7 @@ import { SharedSettingsService } from '../../services/shared-settings.service';
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-route-settings',
@@ -26,7 +27,10 @@ export class RouteSettingsComponent implements OnInit {
   opacity: string = '1'
   width: string = '1'
 
-  constructor(private settings: SharedSettingsService) {}
+  constructor(
+    private settings: SharedSettingsService,
+    private bottomSheetRef: MatBottomSheetRef<RouteSettingsComponent>
+  ) { }
 
   ngOnInit(): void {
     this.mapColor = this.settings.mapColor()
@@ -67,6 +71,10 @@ export class RouteSettingsComponent implements OnInit {
   setWidth(event: Event) {
     const width = (event.target as HTMLInputElement).value
     this.settings.setMapStrokeWidth(width)
+  }
+
+  closeSheet() {
+    this.bottomSheetRef.dismiss();
   }
 
 }

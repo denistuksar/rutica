@@ -2,6 +2,7 @@ export interface ActivityModel {
 calories: any
     resource_state: number
     athlete: Athlete
+    description: string
     name: string
     distance: number
     moving_time: number

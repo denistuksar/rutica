@@ -27,8 +27,8 @@
         <app-map [activity]="activity" [color]="mapColor()"></app-map>
       </div>
 
-      <div class="draggable stats-element" [ngStyle]="getStatsStyle()"
-        (touchstart)="startDrag($event, 'stats')" #statsElement>
+      <div class="draggable stats-element" [ngStyle]="getStatsStyle()" (touchstart)="startDrag($event, 'stats')"
+        #statsElement>
         <app-activity-stats [activity]="activity" [color]="statsColor()"></app-activity-stats>
       </div>
     </div>

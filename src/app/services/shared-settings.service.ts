@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { signal } from '@angular/core'; // Import signal
+import { ActivityModel } from '../models/activity.model';
 
 @Injectable({ providedIn: 'root' })
 export class SharedSettingsService {
@@ -10,6 +11,7 @@ export class SharedSettingsService {
   statsOpacity = signal<string>('1');
   mapStrokeWidth = signal<string>('1');
   mapOpacity = signal<string>('1');
+  fontFamily = signal<string>('Roboto');
   uploadedPhoto = signal<File | null>(null);
   sameStatsColor = signal<boolean>(false);
   gridLines = signal<boolean>(false);
@@ -27,9 +29,18 @@ export class SharedSettingsService {
   pace = signal<boolean>(true);
   time = signal<boolean>(true);
   elevationGain = signal<boolean>(false);
+  avgHeartRate = signal<boolean>(false);
   calories = signal<boolean>(false);
   activityTitle = signal<boolean>(true);
+  description = signal<boolean>(false);
   columns = signal<number>(3);
+  columnGap = signal<number>(10);
+  rowGap = signal<number>(10);
+  activity = signal<ActivityModel | undefined>(undefined);
+
+  setActivity(activity: ActivityModel | undefined) {
+    this.activity.set(activity);  // Update signal
+  }
 
   // Methods to update the signals
   setMapColor(color: string) {
@@ -46,6 +57,18 @@ export class SharedSettingsService {
 
   setStatsOpacity(value: string) {
     this.statsOpacity.set(value);  // Update signal
+  }
+
+  setFontFamily(value: string) {
+    this.fontFamily.set(value);  // Update signal
+  }
+
+  setColumnGap(value: number) {
+    this.columnGap.set(value)
+  }
+
+  setRowGap(value: number) {
+    this.rowGap.set(value)
   }
 
   setMapStrokeWidth(value: string) {
@@ -112,12 +135,20 @@ export class SharedSettingsService {
     this.elevationGain.set(toggle);  // Update signal
   }
 
+  toggleAvgHeartRate(toggle: boolean) {
+    this.avgHeartRate.set(toggle);  // Update signal
+  }
+
   toggleCalories(toggle: boolean) {
     this.calories.set(toggle);  // Update signal
   }
 
   toggleActivityTitle(toggle: boolean) {
     this.activityTitle.set(toggle);  // Update signal
+  }
+
+  toggleDescription(toggle: boolean) {
+    this.description.set(toggle);  // Update signal
   }
 
   toggleCenterTitleText(toggle: boolean) {
@@ -132,7 +163,7 @@ export class SharedSettingsService {
     this.uploadedPhoto.set(file);  // Update signal
   }
 
-  setStatsColumns (count: number) {
+  setStatsColumns(count: number) {
     this.columns.set(count)
   }
 
@@ -143,7 +174,10 @@ export class SharedSettingsService {
     this.statsOpacity.set('1')
     this.mapStrokeWidth.set('1')
     this.mapOpacity.set('1')
+    this.fontFamily.set('Roboto')
     this.columns.set(3)
+    this.columnGap.set(10)
+    this.rowGap.set(10)
     this.uploadedPhoto.set(null)
     this.sameStatsColor.set(false)
     this.centerTitle.set(false)
@@ -161,7 +195,9 @@ export class SharedSettingsService {
     this.pace.set(true)
     this.time.set(true)
     this.elevationGain.set(false)
+    this.avgHeartRate.set(false)
     this.calories.set(false)
     this.activityTitle.set(true)
+    this.description.set(false)
   }
 }

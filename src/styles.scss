@@ -35,8 +35,11 @@
 
   @include mat.expansion-overrides((container-background-color: transparent,
       container-text-color: rgb(202, 202, 202),
-
     ));
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
 
   .mat-expansion-panel-header {
     padding: unset;
@@ -93,6 +96,12 @@
   box-sizing: border-box;
 }
 
+.cdk-overlay-backdrop {
+  &.cdk-overlay-backdrop-showing {
+    opacity: 0;
+  }
+}
+
 html,
 body {
   width: 100%;
@@ -140,7 +149,17 @@ body {
     border-bottom: 1px solid #ffffff0d;
     display: flex;
     align-items: center;
-    gap: 5px;
+    justify-content: space-between;
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .close {
+      display: flex;
+    }
   }
 
   .sheet-content {
@@ -196,6 +215,10 @@ body {
           padding: 0;
         }
       }
+    }
+
+    .select {
+      height: unset;
     }
   }
 }

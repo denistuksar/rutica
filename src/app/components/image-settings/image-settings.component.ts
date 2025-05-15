@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SharedSettingsService } from '../../services/shared-settings.service';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-image-settings',
@@ -20,8 +21,11 @@ export class ImageSettingsComponent implements OnInit {
   horizontal: boolean = false
   vertical: boolean = false
 
-  constructor(private settings: SharedSettingsService) {}
-  
+  constructor(
+    private settings: SharedSettingsService,
+    private bottomSheetRef: MatBottomSheetRef<ImageSettingsComponent>
+  ) { }
+
 
   ngOnInit(): void {
     this.showGridLines = this.settings.gridLines()
@@ -48,5 +52,9 @@ export class ImageSettingsComponent implements OnInit {
   verticalAlign() {
     this.vertical = !this.vertical
     this.settings.setVerticalImageAlign(this.vertical)
+  }
+
+  closeSheet() {
+    this.bottomSheetRef.dismiss();
   }
 }

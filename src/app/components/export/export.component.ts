@@ -93,7 +93,7 @@ export class ExportComponent {
     };
   }
 
-  fitTo9by16 (width: number, height: number) {
+  fitTo9by16(width: number, height: number) {
     const targetRatio = 9 / 16
     const currentRatio = width / height
 
@@ -114,5 +114,9 @@ export class ExportComponent {
     this.sharedSettings.resetAll()
     this.bottomSheetRef.dismiss()
     this.router.navigate(['/activity-list'])
+  }
+
+  closeSheet() {
+    this.bottomSheetRef.dismiss();
   }
 }

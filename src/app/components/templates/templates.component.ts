@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-templates',
@@ -7,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrl: './templates.component.scss'
 })
 export class TemplatesComponent {
+  constructor(
+    private bottomSheetRef: MatBottomSheetRef<TemplatesComponent>,
+  ) { }
+
+  closeSheet() {
+    this.bottomSheetRef.dismiss();
+  }
 
 }

@@ -1,11 +1,13 @@
-<div class="activity-info" *ngIf="activity" [style.--activity-color]="color">
+<div class="activity-info" *ngIf="activity" [style.--activity-color]="color" [style.--font-family]="fontFamily">
   <h3 *ngIf="activityTitle" [ngStyle]="{ 'text-align': centerTitleText ? 'center' : 'left' }">{{ activity.name }}</h3>
+  <h3 *ngIf="description" [ngStyle]="{ 'text-align': centerTitleText ? 'center' : 'left' }">{{ activity.description }}
+  </h3>
 
-  <div class="stats-row"     
-    [ngStyle]="{
+  <div class="stats-row" [ngStyle]="{
       'display': 'grid',
-      'grid-template-columns': 'repeat(' + columns + ', 1fr)',
-      'gap': '12px',
+      'grid-template-columns': 'repeat(' + columns + ', max-content)',
+      'column-gap': columnGap + 'px',
+      'row-gap': rowGap + 'px',
       'text-align': centerStatsText ? 'center' : 'left'
   }">
     <div class="stat" *ngIf="distance">
@@ -23,6 +25,10 @@
     <div class="stat" *ngIf="elevationGain">
       <span class="label">Elevation Gain</span>
       <span class="value">{{ activity.total_elevation_gain }} m</span>
+    </div>
+    <div class="stat" *ngIf="avgHeartRate">
+      <span class="label">Avg Heart Rate</span>
+      <span class="value">{{ activity.average_heartrate | number:'1.0-0' }} bpm</span>
     </div>
     <div class="stat" *ngIf="calories">
       <span class="label">Calories</span>

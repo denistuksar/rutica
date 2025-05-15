@@ -39,8 +39,8 @@ export class OverlayEditorComponent implements OnInit {
   activity: ActivityModel | undefined
   loading = false
   photoUrl: string | null = null
-  mapPosition = { x: 50, y: 50 }
-  statsPosition = { x: 100, y: 300 }
+  mapPosition = { x: 20, y: 65 }
+  statsPosition = { x: 30, y: 170 }
   imagePositionX = 0;
   imagePositionY = 0;
 
@@ -150,14 +150,15 @@ export class OverlayEditorComponent implements OnInit {
     if (activityId) {
       this.stravaService.getActivityById(activityId).subscribe({
         next: (data) => {
+          this.settings.setActivity(data)
           this.activity = data
           console.log(this.activity)
           const file = this.settings.uploadedPhoto()
           if (file) {
             this.photoUrl = URL.createObjectURL(file)
           } else {
-            // this.photoUrl = '/assets/bg.jpg'
-            this.router.navigate(['/activity-list'])
+            this.photoUrl = '/assets/bg.jpg'
+            // this.router.navigate(['/activity-list'])
           }
           this.settings.setLoading(false)
         },
