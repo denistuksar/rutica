@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, Input } from '@angular/core';
+import { Component, effect, Input, OnInit } from '@angular/core';
 import polyline from '@mapbox/polyline';
 import { ActivityModel } from '../../models/activity.model';
 import { SharedSettingsService } from '../../services/shared-settings.service';
@@ -12,12 +12,21 @@ import { SharedSettingsService } from '../../services/shared-settings.service';
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss'
 })
-export class MapComponent {
+export class MapComponent implements OnInit {
   @Input() activity: ActivityModel | undefined
+  @Input() activityList: boolean = false
   @Input() color: string = "#fff"
-  strokeWidth = '0.5'
+  svgWidth!: number
+  svgHeight!: number
+  strokeWidth: string = ''
 
   constructor(private settings: SharedSettingsService) { }
+
+  ngOnInit(): void {
+    this.svgWidth = this.activityList ? 30 : 50
+    this.svgHeight = this.activityList ? 30 : 50
+    this.activityList ? this.settings.setMapStrokeWidth('0.6') : this.settings.setMapStrokeWidth('1')
+  }
 
   getPoints(encoded: string): string {
     const coords = polyline.decode(encoded)
@@ -31,11 +40,8 @@ export class MapComponent {
     const maxLng = Math.max(...lngs)
 
     const padding = 5
-    const svgWidth = 50
-    const svgHeight = 50
-
-    const mapWidth = svgWidth - 2 * padding
-    const mapHeight = svgHeight - 2 * padding
+    const mapWidth = this.svgWidth - 2 * padding
+    const mapHeight = this.svgHeight - 2 * padding
 
     const midLat = (minLat + maxLat) / 2
     const latToKm = 111 // rough constant
@@ -65,7 +71,7 @@ export class MapComponent {
     return coords
       .map(([lat, lng]) => {
         const x = offsetX + (lng - minLng) * lngToKm * scale
-        const y = svgHeight - (offsetY + (lat - minLat) * latToKm * scale)
+        const y = this.svgHeight - (offsetY + (lat - minLat) * latToKm * scale)
         return `${x},${y}`
       })
       .join(' ')

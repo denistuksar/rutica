@@ -1,4 +1,4 @@
-import { Component, effect, Input } from '@angular/core';
+import { Component, effect, Input, OnInit } from '@angular/core';
 import { ActivityModel } from '../../models/activity.model';
 import { CommonModule } from '@angular/common';
 import { PaceFormatPipe } from '../../pipes/pace-format.pipe';
@@ -15,9 +15,10 @@ import { SharedSettingsService } from '../../services/shared-settings.service';
   templateUrl: './activity-stats.component.html',
   styleUrl: './activity-stats.component.scss'
 })
-export class ActivityStatsComponent {
+export class ActivityStatsComponent implements OnInit {
   @Input() activity: ActivityModel | undefined
   @Input() color: string = "#fff"
+  @Input() activityList: boolean = false
   distance: boolean = true
   pace: boolean = true
   time: boolean = true
@@ -36,6 +37,10 @@ export class ActivityStatsComponent {
   constructor(
     private settings: SharedSettingsService
   ) { }
+
+  ngOnInit(): void {
+    this.settings.setFontFamily('Helvetica')
+  }
 
   private distanceEffect = effect(() => {
     this.distance = this.settings.distance()

@@ -1,3 +1,52 @@
+.activity-list {
+  h3 {
+    font-weight: 600;
+    font-size: 15px;
+    opacity: .9;
+  }
+
+  .stats-row {
+    margin-top: 5px;
+
+    .stat {
+      display: flex;
+      flex-direction: row;
+      gap: 3px;
+      align-items: center;
+      justify-content: center;
+
+      .label {
+        margin: 0;
+
+        .text {
+          display: none;
+        }
+
+        .icon {
+          display: flex;
+
+          svg {
+            display: flex;
+            height: 16px;
+            width: auto;
+            opacity: .8;
+          }
+        }
+      }
+
+      .value {
+        font-weight: 400;
+        font-size: 14px;
+        opacity: .8;
+
+        .unit {
+          margin-left: 0px;
+        }
+      }
+    }
+  }
+}
+
 .activity-info {
   display: flex;
   flex-direction: column;
@@ -7,7 +56,7 @@
 }
 
 h3 {
-  margin: 0 0 0px 0;
+  margin: 0;
   font-size: 16px;
   font-weight: bold;
 }
@@ -28,18 +77,27 @@ h3 {
       font-size: 12px;
       font-weight: 400;
       margin-bottom: 2px;
+
+      .icon {
+        display: none;
+      }
     }
 
     .value {
       font-size: 15px;
       font-weight: 600;
+
+      .unit {
+        margin-left: 3px;
+      }
     }
   }
 }
 
 .activity-info>h3,
 .stat,
-.label,
+.text,
+.unit,
 .value {
   font-family: var(--font-family, sans-serif);
 }
