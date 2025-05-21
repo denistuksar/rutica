@@ -43,9 +43,12 @@ export class OverlayEditorComponent implements OnInit {
   statsPosition = { x: 30, y: 170 }
   imagePositionX = 0;
   imagePositionY = 0;
+  templatePosition = { x: 20, y: 65 }
+  templateScale = 1
+  customCssClass: string | undefined = undefined
 
   dragging = false
-  dragTarget: 'image' | 'map' | 'stats' | null = null;
+  dragTarget: 'image' | 'map' | 'stats' | 'template' | null = null;
   startX = 0
   startY = 0
   mapScale = 1
@@ -134,6 +137,10 @@ export class OverlayEditorComponent implements OnInit {
     if (this.settings.verticalStatsAlign()) {
       this.alignStats('vertical');
     }
+  })
+
+  private customTemplateEffect = effect(() => {
+    this.customCssClass = this.settings.selectedTemplate()
   })
 
   private loadingEffect = effect(() => {
@@ -237,10 +244,22 @@ export class OverlayEditorComponent implements OnInit {
     }
   }
 
-  startDrag(event: MouseEvent | TouchEvent, target: 'map' | 'stats') {
+  getTemplateStyle() {
+    return {
+      left: `${this.templatePosition.x}px`,
+      top: `${this.templatePosition.y}px`,
+      transform: `scale(${this.templateScale})`,
+      position: 'absolute' // or 'relative', depending on layout
+    }
+  }
+
+  startDrag(event: MouseEvent | TouchEvent, target: 'map' | 'stats' | 'template') {
     if (this.dragging) return;
 
-    event.preventDefault()
+
+    if (event.cancelable) {
+      event.preventDefault()
+    }
     event.stopPropagation()
 
     this.dragging = true
@@ -259,6 +278,7 @@ export class OverlayEditorComponent implements OnInit {
     window.addEventListener('touchmove', this.move, { passive: false })
     window.addEventListener('mouseup', this.endDrag)
     window.addEventListener('touchend', this.endDrag)
+    window.addEventListener('touchstart', this.checkTouchStart, { passive: false })
   }
 
   move = (event: MouseEvent | TouchEvent) => {
@@ -294,17 +314,25 @@ export class OverlayEditorComponent implements OnInit {
       const newDistance = this.getDistance(touch1, touch2);
 
       if (!this.resizing) {
-        this.initialDistance = newDistance;
-        this.initialScale = this.dragTarget === 'map' ? this.mapScale : this.statsScale;
-        this.resizing = true;
-        return;
+        this.initialDistance = newDistance
+        if (this.dragTarget === 'map') {
+          this.initialScale = this.mapScale
+        } else if (this.dragTarget === 'stats') {
+          this.initialScale = this.statsScale
+        } else if (this.dragTarget === 'template') {
+          this.initialScale = this.templateScale
+        }
+        this.resizing = true
+        return
       }
 
-      const scaleFactor = newDistance / this.initialDistance;
+      const scaleFactor = newDistance / this.initialDistance
       if (this.dragTarget === 'map') {
-        this.mapScale = this.initialScale * scaleFactor;
+        this.mapScale = this.initialScale * scaleFactor
       } else if (this.dragTarget === 'stats') {
-        this.statsScale = this.initialScale * scaleFactor;
+        this.statsScale = this.initialScale * scaleFactor
+      } else if (this.dragTarget === 'template') {
+        this.templateScale = this.initialScale * scaleFactor
       }
     }
   }
@@ -320,6 +348,9 @@ export class OverlayEditorComponent implements OnInit {
       this.statsPosition.y += dy
       this.settings.setHorizontalStatsAlign(false)
       this.settings.setVerticalStatsAlign(false)
+    } else if (this.dragTarget === 'template') {
+      this.templatePosition.x += dx
+      this.templatePosition.y += dy
     }
   }
 
@@ -391,7 +422,9 @@ export class OverlayEditorComponent implements OnInit {
   }
 
   onTouchStart(event: TouchEvent) {
-    event.preventDefault();
+    if (event.cancelable) {
+      event.preventDefault()
+    }
 
     if (event.touches.length === 2) {
       if (this.resizing || this.dragging) { return; }

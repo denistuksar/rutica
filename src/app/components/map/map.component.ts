@@ -16,6 +16,7 @@ export class MapComponent implements OnInit {
   @Input() activity: ActivityModel | undefined
   @Input() activityList: boolean = false
   @Input() color: string = "#fff"
+  @Input() customCssClass = ''
   svgWidth!: number
   svgHeight!: number
   strokeWidth: string = ''
@@ -26,6 +27,13 @@ export class MapComponent implements OnInit {
     this.svgWidth = this.activityList ? 30 : 50
     this.svgHeight = this.activityList ? 30 : 50
     this.activityList ? this.settings.setMapStrokeWidth('0.6') : this.settings.setMapStrokeWidth('1')
+    switch (this.customCssClass) {
+      case 'strava-default':
+        this.settings.setMapColor('#FC4C02')
+        break;
+      default:
+        break;
+    }
   }
 
   getPoints(encoded: string): string {
@@ -83,6 +91,10 @@ export class MapComponent implements OnInit {
     if (mapEl) {
       mapEl.style.opacity = opacity
     }
+  })
+
+  private mapColorEffect = effect(() => {
+    this.color = this.settings.mapColor()
   })
 
   private strokeEffect = effect(() => {

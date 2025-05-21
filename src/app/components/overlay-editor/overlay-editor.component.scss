@@ -114,6 +114,24 @@ html {
     bottom: 0;
     height: 60px; // adjust as needed
   }
+
+  .elements-wrapper {
+    &.strava-default {
+      .draggable {
+        display: flex;
+        flex-direction: column;
+
+        .map-element {
+          order: 2;
+        }
+
+        .stats-element {
+          order: 1;
+          justify-content: center;
+        }
+      }
+    }
+  }
 }
 
 .color-drawer {

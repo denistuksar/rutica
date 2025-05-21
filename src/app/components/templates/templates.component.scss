@@ -1,4 +1,39 @@
 :host {
-    display: block;
-    font-family: inherit;
+  display: block;
+  font-family: inherit;
+}
+
+.sheet-content {
+  padding-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .template-preview {
+    max-width: 120px;
+
+    .image {
+      border-radius: 8px;
+      width: auto; // or whatever your expected size is
+      height: 150px;
+      object-fit: cover; // crop to fit the box
+      display: block;
+      border: 2px solid rgba(255, 255, 255, 0.058);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border 0.2s;
+
+      &.selected {
+        border-color: #f06200; // or your theme color
+      }
+    }
+
+    .name {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+      color: rgb(202, 202, 202);
+      font-weight: 500;
+    }
   }
+}

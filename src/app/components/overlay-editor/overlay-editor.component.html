@@ -20,7 +20,7 @@
       <div class="grid-line vertical" *ngFor="let x of verticalLines" [style.left.%]="x"></div>
     </div>
 
-    <div class="elements-wrapper">
+    <div class="elements-wrapper" *ngIf="!customCssClass">
       <div class="draggable map-element" *ngIf="displayMap()" [ngStyle]="getMapStyle()"
         (touchstart)="startDrag($event, 'map')" #routeElement>
         <!-- Placeholder for Map -->
@@ -30,6 +30,19 @@
       <div class="draggable stats-element" [ngStyle]="getStatsStyle()" (touchstart)="startDrag($event, 'stats')"
         #statsElement>
         <app-activity-stats [activity]="activity" [color]="statsColor()"></app-activity-stats>
+      </div>
+    </div>
+
+    <div class="elements-wrapper" *ngIf="customCssClass" [ngClass]="customCssClass">
+      <div class="draggable template-element" [ngStyle]="getTemplateStyle()"
+        (touchstart)="startDrag($event, 'template')" (mousedown)="startDrag($event, 'template')">
+        <div class="map-element" [ngStyle]="getMapStyle()" #routeElement>
+          <app-map [activity]="activity" [customCssClass]="customCssClass"></app-map>
+        </div>
+
+        <div class="stats-element" [ngStyle]="getStatsStyle()" #statsElement>
+          <app-activity-stats [activity]="activity" [customCssClass]="customCssClass"></app-activity-stats>
+        </div>
       </div>
     </div>
 

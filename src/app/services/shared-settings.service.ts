@@ -36,6 +36,7 @@ export class SharedSettingsService {
   columns = signal<number>(3);
   columnGap = signal<number>(10);
   rowGap = signal<number>(10);
+  selectedTemplate = signal<string | undefined>(undefined);
   activity = signal<ActivityModel | undefined>(undefined);
 
   setActivity(activity: ActivityModel | undefined) {
@@ -65,6 +66,10 @@ export class SharedSettingsService {
 
   setColumnGap(value: number) {
     this.columnGap.set(value)
+  }
+
+  setSelectedTemplate(value: string | undefined) {
+    this.selectedTemplate.set(value)
   }
 
   setRowGap(value: number) {
@@ -175,6 +180,7 @@ export class SharedSettingsService {
     this.mapStrokeWidth.set('1')
     this.mapOpacity.set('1')
     this.fontFamily.set('Roboto')
+    this.selectedTemplate.set(undefined)
     this.columns.set(3)
     this.columnGap.set(10)
     this.rowGap.set(10)

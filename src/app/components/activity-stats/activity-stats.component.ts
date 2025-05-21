@@ -19,6 +19,7 @@ export class ActivityStatsComponent implements OnInit {
   @Input() activity: ActivityModel | undefined
   @Input() color: string = "#fff"
   @Input() activityList: boolean = false
+  @Input() customCssClass = ''
   distance: boolean = true
   pace: boolean = true
   time: boolean = true
@@ -40,6 +41,16 @@ export class ActivityStatsComponent implements OnInit {
 
   ngOnInit(): void {
     this.settings.setFontFamily('Helvetica')
+    switch (this.customCssClass) {
+      case 'strava-default':
+        this.settings.setStatsColumns(1)
+        this.settings.toggleActivityTitle(false)
+        this.settings.toggleCenterStatsText(true)
+        this.activityTitle = false
+        break;
+      default:
+        break;
+    }
   }
 
   private distanceEffect = effect(() => {

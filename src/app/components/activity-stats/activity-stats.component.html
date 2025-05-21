@@ -1,12 +1,12 @@
 <div class="activity-info" *ngIf="activity" [style.--activity-color]="color" [style.--font-family]="fontFamily"
-  [class]="{'activity-list': activityList}">
+  [ngClass]="[activityList ? 'activity-list' : '', customCssClass]">
   <h3 *ngIf="activityTitle" [ngStyle]="{ 'text-align': centerTitleText ? 'center' : 'left' }">{{ activity.name }}</h3>
   <h3 *ngIf="description" [ngStyle]="{ 'text-align': centerTitleText ? 'center' : 'left' }">{{ activity.description }}
   </h3>
 
   <div class="stats-row" [ngStyle]="{
       'display': 'grid',
-      'grid-template-columns': 'repeat(' + columns + ', max-content)',
+      'grid-template-columns': columns > 1 ? 'repeat(' + columns + ', max-content)' : 'repeat(' + columns + ', auto)',
       'column-gap': columnGap + 'px',
       'row-gap': rowGap + 'px',
       'text-align': centerStatsText ? 'center' : 'left'

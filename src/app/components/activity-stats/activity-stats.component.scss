@@ -101,3 +101,22 @@ h3 {
 .value {
   font-family: var(--font-family, sans-serif);
 }
+
+.strava-default {
+  .stats-row {
+    .stat {
+      .label {
+        font-size: 9px;
+
+        .text {
+          font-family: 'Montserrat';
+        }
+      }
+
+      .value {
+        font-family: 'Montserrat';
+        font-weight: 600;
+      }
+    }
+  }
+}
