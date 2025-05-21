@@ -16,6 +16,7 @@
       border-radius: 8px;
       width: auto; // or whatever your expected size is
       height: 150px;
+      min-width: 110px;
       object-fit: cover; // crop to fit the box
       display: block;
       border: 2px solid rgba(255, 255, 255, 0.058);

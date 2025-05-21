@@ -5,7 +5,7 @@ import { ActivityModel } from '../models/activity.model';
 @Injectable({ providedIn: 'root' })
 export class SharedSettingsService {
   // Replace BehaviorSubject with signal
-  mapColor = signal<string>('#ffffff');
+  mapColor = signal<string>('#fc4c02');
   bgColor = signal<string>('#ffffff');
   statsColor = signal<string>('#ffffff');
   statsOpacity = signal<string>('1');
@@ -173,7 +173,7 @@ export class SharedSettingsService {
   }
 
   resetAll() {
-    this.mapColor.set('#ffffff')
+    this.mapColor.set('#fc4c02')
     this.bgColor.set('#ffffff')
     this.statsColor.set('#ffffff')
     this.statsOpacity.set('1')
