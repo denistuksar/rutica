@@ -19,10 +19,9 @@
 </div>
 
 <div class="sheet-content">
-  <div class="template-preview"
-       *ngFor="let template of templatePreviews"
-       (click)="selectTemplate(template.id)">
-    <img class="image" [src]="template.src" alt="Template Preview {{template.id}}" [class.selected]="template.id === selectedTemplateId">
-    <div class="name">{{ template.name }}</div>
+  <div class="template-preview" *ngFor="let template of templatePreviews">
+    <img class="image" [src]="template.src" alt="Template Preview {{template.id}}" (click)="selectTemplate(template.id)"
+      [class.selected]="template.id === selectedTemplateId">
+    <div class="name" [class.selected]="template.id === selectedTemplateId">{{ template.name }}</div>
   </div>
 </div>

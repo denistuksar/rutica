@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, Input, OnInit } from '@angular/core';
+import { Component, effect, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import polyline from '@mapbox/polyline';
 import { ActivityModel } from '../../models/activity.model';
 import { SharedSettingsService } from '../../services/shared-settings.service';
@@ -12,7 +12,7 @@ import { SharedSettingsService } from '../../services/shared-settings.service';
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss'
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnChanges {
   @Input() activity: ActivityModel | undefined
   @Input() activityList: boolean = false
   @Input() color: string = "#fff"
@@ -24,17 +24,32 @@ export class MapComponent implements OnInit {
   constructor(private settings: SharedSettingsService) { }
 
   ngOnInit(): void {
-    this.svgWidth = this.activityList ? 30 : 50
-    this.svgHeight = this.activityList ? 30 : 50
-    this.activityList ? this.settings.setMapStrokeWidth('0.6') : this.settings.setMapStrokeWidth('1')
+    this.svgWidth = this.settings.mapSvgWidth()
+    this.svgHeight = this.settings.mapSvgHeight()
+  }
+
+  ngOnChanges(): void {
     switch (this.customCssClass) {
       case 'strava-default':
         this.settings.setMapColor('#FC4C02')
+        this.settings.setMapStrokeWidth('1.5')
+        break;
+      case 'nike':
+        this.settings.setSvgHeight(40)
+        this.settings.setSvgWidth(40)
+        this.settings.setMapColor('white')
+        this.settings.setMapStrokeWidth('1')
         break;
       default:
+        this.settings.setMapStrokeWidth('1.5')
         break;
     }
   }
+
+  private svgEffect = effect(() => {
+    this.svgWidth = this.settings.mapSvgWidth()
+    this.svgHeight = this.settings.mapSvgHeight()
+  })
 
   getPoints(encoded: string): string {
     const coords = polyline.decode(encoded)
@@ -87,7 +102,9 @@ export class MapComponent implements OnInit {
 
   private opacityEffect = effect(() => {
     const opacity = this.settings.mapOpacity()
-    const mapEl = document.querySelector('.map-container') as HTMLElement
+    console.log(document)
+    const mapEl = document.querySelector('.map-element') as HTMLElement
+    console.log(mapEl)
     if (mapEl) {
       mapEl.style.opacity = opacity
     }

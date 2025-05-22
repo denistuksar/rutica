@@ -6,26 +6,32 @@
 .sheet-content {
   padding-top: 1rem;
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+
 
   .template-preview {
-    max-width: 120px;
+    max-width: 110px;
+    display: flex;
+    flex-direction: column;
 
     .image {
       border-radius: 8px;
-      width: auto; // or whatever your expected size is
-      height: 150px;
+      width: auto;
+      height: 180px;
       min-width: 110px;
-      object-fit: cover; // crop to fit the box
+      object-fit: contain;
       display: block;
       border: 2px solid rgba(255, 255, 255, 0.058);
       border-radius: 8px;
       cursor: pointer;
-      transition: border 0.2s;
+      transition: border-color 0.2s;
 
       &.selected {
-        border-color: #f06200; // or your theme color
+        border-color: #fc4c02;
       }
     }
 
@@ -35,6 +41,12 @@
       text-align: center;
       color: rgb(202, 202, 202);
       font-weight: 500;
+      font-size: 12px;
+      transition: color 0.2s;
+
+      &.selected {
+        color: white;
+      }
     }
   }
 }

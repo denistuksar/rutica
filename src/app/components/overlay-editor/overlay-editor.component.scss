@@ -131,6 +131,25 @@ html {
         }
       }
     }
+
+    &.nike {
+      .draggable {
+        background-color: black;
+        padding: 9px;
+        border-radius: 10px;
+        display: flex;
+        min-width: 250px;
+        justify-content: space-between;
+      }
+
+      .map-element {
+        order: 2;
+        position: relative;
+        top: 0 !important;
+        left: 0px !important;
+        align-items: flex-start;
+      }
+    }
   }
 }
 

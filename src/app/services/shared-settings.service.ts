@@ -36,6 +36,8 @@ export class SharedSettingsService {
   columns = signal<number>(3);
   columnGap = signal<number>(10);
   rowGap = signal<number>(10);
+  mapSvgHeight = signal<number>(100);
+  mapSvgWidth = signal<number>(100);
   selectedTemplate = signal<string | undefined>(undefined);
   activity = signal<ActivityModel | undefined>(undefined);
 
@@ -66,6 +68,14 @@ export class SharedSettingsService {
 
   setColumnGap(value: number) {
     this.columnGap.set(value)
+  }
+
+  setSvgWidth(value: number) {
+    this.mapSvgWidth.set(value)
+  }
+
+  setSvgHeight(value: number) {
+    this.mapSvgHeight.set(value)
   }
 
   setSelectedTemplate(value: string | undefined) {
@@ -184,6 +194,8 @@ export class SharedSettingsService {
     this.columns.set(3)
     this.columnGap.set(10)
     this.rowGap.set(10)
+    this.mapSvgHeight.set(100)
+    this.mapSvgWidth.set(100)
     this.uploadedPhoto.set(null)
     this.sameStatsColor.set(false)
     this.centerTitle.set(false)

@@ -13,7 +13,8 @@ import { SharedSettingsService } from '../../services/shared-settings.service';
 })
 export class TemplatesComponent {
   templatePreviews = [
-    { id: 1, src: 'assets/template-previews/1.png', name: 'Strava Default', cssClass: 'strava-default' }
+    { id: 1, src: 'assets/template-previews/1.png', name: 'Strava Default', cssClass: 'strava-default' },
+    { id: 2, src: 'assets/template-previews/2.png', name: 'Nike', cssClass: 'nike' }
   ]
   selectedTemplateId: number | undefined = undefined
 
@@ -34,11 +35,11 @@ export class TemplatesComponent {
   }
 
   selectTemplate(id: number) {
+    this.settings.resetAll()
     let template
     if (this.selectedTemplateId === id) {
       this.selectedTemplateId = undefined
       template = undefined
-      this.settings.resetAll()
     } else {
       this.selectedTemplateId = id
       template = this.templatePreviews.find(el => el.id === id)

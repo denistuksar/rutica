@@ -1,6 +1,11 @@
 <div class="activity-info" *ngIf="activity" [style.--activity-color]="color" [style.--font-family]="fontFamily"
   [ngClass]="[activityList ? 'activity-list' : '', customCssClass]">
-  <h3 *ngIf="activityTitle" [ngStyle]="{ 'text-align': centerTitleText ? 'center' : 'left' }">{{ activity.name }}</h3>
+  <h3 class="activity-date" *ngIf="customCssClass === 'nike'"
+    [ngStyle]="{ 'text-align': centerTitleText ? 'center' : 'left' }">
+    {{ activity.start_date_local | activityDate }}
+  </h3>
+  <h3 class="activity-title" *ngIf="activityTitle" [ngStyle]="{ 'text-align': centerTitleText ? 'center' : 'left' }">{{
+    activity.name }}</h3>
   <h3 *ngIf="description" [ngStyle]="{ 'text-align': centerTitleText ? 'center' : 'left' }">{{ activity.description }}
   </h3>
 
@@ -11,9 +16,9 @@
       'row-gap': rowGap + 'px',
       'text-align': centerStatsText ? 'center' : 'left'
   }">
-    <div class="stat" *ngIf="distance">
+    <div class="stat distance" *ngIf="distance">
       <span class="label">
-        <span class="text">Distance</span>
+        <span class="text">{{customCssClass === 'nike' ? 'Kilometers' : 'Distance'}}</span>
         <span class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -32,9 +37,9 @@
         {{ activity.distance / 1000 | number:'1.2-2' }}<span class="unit">km</span>
       </span>
     </div>
-    <div class="stat" *ngIf="pace">
+    <div class="stat pace" *ngIf="pace">
       <span class="label">
-        <span class="text">Pace</span>
+        <span class="text">{{customCssClass === 'nike' ? 'Avg. Pace' : 'Pace'}}</span>
         <span class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -43,10 +48,10 @@
               d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />
           </svg></span>
       </span>
-      <span class="value">{{ activity.moving_time / (activity.distance / 1000) | paceFormat }}<span
+      <span class="value">{{ activity.moving_time / (activity.distance / 1000) | paceFormat:customCssClass }}<span
           class="unit">/km</span></span>
     </div>
-    <div class="stat" *ngIf="time">
+    <div class="stat time" *ngIf="time">
       <span class="label">
         <span class="text">Time</span>
         <span class="icon">
@@ -58,17 +63,17 @@
             <circle cx="12" cy="14" r="8" />
           </svg></span>
       </span>
-      <span class="value">{{ activity.moving_time | durationFormat }}</span>
+      <span class="value">{{ activity.moving_time | durationFormat:customCssClass }}</span>
     </div>
-    <div class="stat" *ngIf="elevationGain">
+    <div class="stat elevation-gain" *ngIf="elevationGain">
       <span class="label">Elevation Gain</span>
       <span class="value">{{ activity.total_elevation_gain }}<span class="unit">m</span></span>
     </div>
-    <div class="stat" *ngIf="avgHeartRate">
+    <div class="stat heart-rate" *ngIf="avgHeartRate">
       <span class="label">Avg Heart Rate</span>
       <span class="value">{{ activity.average_heartrate | number:'1.0-0' }}<span class="unit">bpm</span></span>
     </div>
-    <div class="stat" *ngIf="calories">
+    <div class="stat calories" *ngIf="calories">
       <span class="label">Calories</span>
       <span class="value">{{ activity.calories }}</span>
     </div>

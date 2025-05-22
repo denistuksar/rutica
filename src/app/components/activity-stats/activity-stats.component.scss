@@ -120,3 +120,77 @@ h3 {
     }
   }
 }
+
+.nike {
+
+  .activity-title,
+  .activity-date {
+    font-size: 12px;
+    font-family: 'Montserrat';
+    opacity: .9;
+    font-weight: 500;
+  }
+
+  .activity-date {
+    opacity: .6;
+    padding-bottom: 3px;
+    font-size: 11px;
+  }
+
+  .stats-row {
+    align-items: end;
+    margin-top: 3px;
+
+    .stat {
+      .unit {
+        display: none;
+      }
+
+      .label {
+        font-size: 9px;
+        order: 2;
+        opacity: .6;
+        margin: 0;
+
+        .text {
+          font-family: 'Montserrat';
+        }
+      }
+
+      .value {
+        font-family: 'Montserrat';
+        font-weight: 600;
+        color: #8FFD74;
+        letter-spacing: 1px;
+      }
+    }
+
+    .distance {
+      .value {
+        font-size: 32px;
+        font-style: italic;
+        font-weight: 700;
+        line-height: 35px;
+      }
+    }
+
+    .time {
+      order: 2;
+    }
+
+    .pace {
+      order: 3;
+    }
+
+    .pace,
+    .time,
+    .elevation-gain,
+    .heart-rate,
+    .calories {
+      .value {
+        font-weight: 500 !important;
+        line-height: 22px;
+      }
+    }
+  }
+}

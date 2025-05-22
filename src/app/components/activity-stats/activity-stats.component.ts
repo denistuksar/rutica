@@ -1,21 +1,23 @@
-import { Component, effect, Input, OnInit } from '@angular/core';
+import { Component, effect, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivityModel } from '../../models/activity.model';
 import { CommonModule } from '@angular/common';
 import { PaceFormatPipe } from '../../pipes/pace-format.pipe';
 import { DurationFormatPipe } from '../../pipes/duration-format.pipe';
 import { SharedSettingsService } from '../../services/shared-settings.service';
+import { ActivityDatePipe } from '../../pipes/activity-date-format.pipe copy';
 
 @Component({
   selector: 'app-activity-stats',
   imports: [
     CommonModule,
     PaceFormatPipe,
-    DurationFormatPipe
+    DurationFormatPipe,
+    ActivityDatePipe
   ],
   templateUrl: './activity-stats.component.html',
   styleUrl: './activity-stats.component.scss'
 })
-export class ActivityStatsComponent implements OnInit {
+export class ActivityStatsComponent implements OnInit, OnChanges {
   @Input() activity: ActivityModel | undefined
   @Input() color: string = "#fff"
   @Input() activityList: boolean = false
@@ -41,6 +43,9 @@ export class ActivityStatsComponent implements OnInit {
 
   ngOnInit(): void {
     this.settings.setFontFamily('Helvetica')
+  }
+
+  ngOnChanges(): void {
     switch (this.customCssClass) {
       case 'strava-default':
         this.settings.setStatsColumns(1)
@@ -49,6 +54,8 @@ export class ActivityStatsComponent implements OnInit {
         this.activityTitle = false
         break;
       default:
+      case 'nike':
+        this.settings.setColumnGap(15)
         break;
     }
   }

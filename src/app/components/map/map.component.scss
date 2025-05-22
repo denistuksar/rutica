@@ -2,5 +2,11 @@
     max-height: 100px;
 }
 
-.strava-default {
+.nike {
+    svg {
+        polyline {
+            position: relative;
+            left: 10px;
+        }
+    }
 }

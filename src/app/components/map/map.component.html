@@ -1,6 +1,7 @@
 <div class="map-container" *ngIf="activity && activity.map?.summary_polyline"
   [ngStyle]="activityList ? { 'background': '#222525' } : {}" [ngClass]="customCssClass">
-  <svg [attr.viewBox]="'0 0 ' + svgWidth + ' ' + svgHeight" xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+  <svg [ngStyle]="activityList ? { 'padding': '10px' } : {}" [attr.viewBox]="'0 0 ' + svgWidth + ' ' + svgHeight"
+    xmlns="http://www.w3.org/2000/svg" [attr.width]="svgWidth" [attr.height]="svgHeight"
     preserveAspectRatio="xMidYMid meet">
     <polyline [attr.points]="getPoints(activity.map.summary_polyline)" fill="none" [attr.stroke]="color"
       [attr.stroke-width]="strokeWidth" stroke-linejoin="round" stroke-linecap="round" />
